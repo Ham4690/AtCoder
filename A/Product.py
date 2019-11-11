@@ -1,2 +1,6 @@
-x,y = map(int,input().split())
-print('Even') if((x*y%2) == 0) else print('Odd')
+a,b = map(int,input().split())
+
+if(a * b) % 2 == 0 :
+    print("Even")
+else:
+    print("Odd")
