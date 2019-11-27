@@ -1,26 +1,24 @@
-import math
+####kk
+# coding: utf-8
+# Your code here!
 
-A,B,X = map(int,input().split())
+A, B, X = map(int, input().split())
+min_num = 0
+max_num = pow(10,9)
+num = pow(10,9)
 
-# A * N + B * d(N) yen 
-
-check_num = [10,100,1000,10000,100000,1000000,10000000,100000000,1000000000]
-
-if((A*1+B*1)>X):
-    print(0)
-else:
-    flag = True
-    for i in range(len(check_num)):
-        if((A*check_num[i]+B*(i+2)) > X):
-            i = i + 1
-            flag = False
-            break
-    if(flag):
-        print(10**9)
-    else:
-        Num = (X - B*i)/A
-        if(isinstance(Num,int)):
-            value = Num + 1
+while True:
+    tmp = A * num + B * len(str(num))
+    if num == 0:
+        print(0)
+        break
+    elif min_num + 2 <= max_num:
+        if X >= tmp:
+            min_num = num
         else:
-            value = math.ceil(Num)
-        print(value-1)
+            max_num = num
+        num = (min_num + max_num) // 2
+    else:    
+        if X >= tmp:
+            print(num)
+            break
