@@ -1,28 +1,41 @@
 import numpy as np
+
+def checkTestimony(honest, A_map, N):
+    for i in range(N):
+        for j in range(len(A_map[i])):
+            Opponent = A_map[i][j][0] - 1
+            OpJudge  = A_map[i][j][1]
+            if honest[i] == 0:
+                if honest[Opponent] == OpJudge:
+                    return False 
+            else:
+                if honest[Opponent] != OpJudge:
+                    return False 
+    return True    
+
+def setHonest (num, l):
+    for i in range(len(l)):
+        if (num >> i) & 1 == 1:
+            l[i] = 1
+
 N = int(input())
-
-
-t_l =np.array([[0.5 for i in range(N)] for j in range(N)])
-
+A_map = {}
+ans = [0]
 for i in range(N):
     A = int(input())
-    for j in range(A):
-        x,y = map(int,input().split())
-        t_l[i][x-1] = y
+    if A > 0:
+        for j in range(A):
+            xy = list(map(int,input().split()))
+            if i in A_map.keys():
+                A_map[i].append(xy)
+            else:
+                A_map[i] = [xy]
 
-t_l = (t_l - 0.5) * 2
-print(t_l)
-print(t_l[:][1])
+for i in range(2**N):
+    honest = [0] * N
+    setHonest(i, honest)
+    if checkTestimony(honest, A_map, N) :
+        honestNum = honest.count(1)
+        ans.append(honestNum)
 
-# Num = 2**N - 1
-# ans = list(bin(Num)[2:])
-
-# while 1 :
-#     if check(ans,t_l,N):
-#         ans.count('1')
-#         exit()
-    
-#     Num = Num - 1
-#     ans = list(bin(Num)[2:])
-    
-
+print(max(ans))
