@@ -1,26 +1,7 @@
-import numpy as np
-
-def checkTestimony(honest, A_map, N):
-    for i in range(N):
-        for j in range(len(A_map[i])):
-            Opponent = A_map[i][j][0] - 1
-            OpJudge  = A_map[i][j][1]
-            if honest[i] == 0:
-                if honest[Opponent] == OpJudge:
-                    return False 
-            else:
-                if honest[Opponent] != OpJudge:
-                    return False 
-    return True    
-
-def setHonest (num, l):
-    for i in range(len(l)):
-        if (num >> i) & 1 == 1:
-            l[i] = 1
-
 N = int(input())
 A_map = {}
-ans = [0]
+
+# input
 for i in range(N):
     A = int(input())
     if A > 0:
@@ -30,12 +11,17 @@ for i in range(N):
                 A_map[i].append(xy)
             else:
                 A_map[i] = [xy]
+ans = 0
 
-for i in range(2**N):
-    honest = [0] * N
-    setHonest(i, honest)
-    if checkTestimony(honest, A_map, N) :
-        honestNum = honest.count(1)
-        ans.append(honestNum)
+for bits in range(1,2**N):
+    honest = True
+    for i in range(1,N+1):
+        if not (bits & (1 << (i-1))): continue
 
-print(max(ans))
+        if i in A_map.keys():
+            for a in A_map[i]:   
+                if ((bits >> (a[0] -  1)) & 1) ^ a[1] : honest = False
+    if honest : 
+        ans = max(ans, bin(bits).count('1'))
+
+print(ans)
