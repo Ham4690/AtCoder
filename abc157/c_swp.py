@@ -29,8 +29,9 @@ for x in range(1000):
 
     if isOk :
         num = "".join(map(str, d))
-        print(num)
-        sys.exit
+        break
 
-print(-1)
-sys.exit
+if isOk:
+    print(num)
+else:
+    print(-1)
