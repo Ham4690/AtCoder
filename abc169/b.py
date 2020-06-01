@@ -21,6 +21,8 @@ def calcAns(nums):
   ans = 1
   for i in range(len(nums)):
     ans = ans * nums[i]
+    if ans > 10**18 :
+      return False
   return ans
 
 if inZero(a_list):
@@ -29,10 +31,10 @@ if inZero(a_list):
 
 ans = calcAns(a_list) 
 
-if ans > 10**18 :
-  print(-1)
-else :
+if ans :
   print(ans)
+else :
+  print(-1)
 
 
 
